@@ -1,0 +1,33 @@
+;To setup longmynd on pi boot:
+
+;Create service file
+
+;sudo nano /etc/systemd/system/longmynd.service
+
+;Enter this into the text file:
+
+[Unit]
+Description=Longmynd Client
+After=multi-user.target
+Requires=network.target
+
+[Service]
+Type=idle
+User=pi
+ExecStart=/home/pi/longmynd/longmynd -W 8080 -i 230.0.0.12 4003 -I 230.0.0.12 4002 741538 250
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+then do 
+
+sudo systemctl daemon-reload
+sudo systemctl enable longmynd.service
+
+it should then start on reboot, you can also use these commands manually
+
+sudo systemctl stop longmynd.service
+sudo systemctl start longmynd.service
+sudo systemctl status longmynd.service
+
